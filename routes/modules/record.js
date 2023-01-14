@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const Record = require("../../models/records");
 
-
 router.get("/new", (req, res) => {
   return res.render("new");
 });
@@ -12,7 +11,7 @@ router.post("/new", async (req, res) => {
     const createdRecord = await Record.create(req.body);
     return res.redirect("/");
   } catch (err) {
-    console.log(err);
+    return res.render("error", { err });
   }
 });
 
