@@ -31,6 +31,23 @@
         </form>
       </td>
     </tr>
+    {{#each records}}
+      <tr class="align-middle">
+        <td class="col-1 text-center"><i class="fa-solid fa-house"></i></td>
+        <td>
+          {{this.name}}
+          <br />
+          {{this.date}}
+        </td>
+        <td>{{this.amount}}</td>
+        <td class="text-end">
+          <a href="/" class="btn btn-dark">修改</a>
+          <form action="" style="display: inline;">
+            <button href="/" class="btn btn-danger">刪除</button>
+          </form>
+        </td>
+      </tr>
+    {{/each}}
   </tbody>
 </table>
 

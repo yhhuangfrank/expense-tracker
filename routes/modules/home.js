@@ -1,7 +1,15 @@
 const router = require("express").Router();
+const Record = require("../../models/records");
+const dayjs = require("dayjs"); //- 處理日期格式套件
 
-router.get("/", (req, res) => {
-  return res.render("index")
-})
+router.get("/", async (req, res) => {
+  const records = await Record.find().lean();
+  //- 處理日期格式
+  records.forEach((record) => {
+    record.date = dayjs(record.date).format("YYYY-MM-DD");
+  });
+  console.log(records);
+  return res.render("index", { records });
+});
 
 module.exports = router;
