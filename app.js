@@ -1,6 +1,7 @@
 //- require related modules
 const express = require("express");
 const exphbs = require("express-handlebars");
+const routes = require("./routes/index");
 const app = express();
 const port = 3000;
 
@@ -15,18 +16,7 @@ app.set("view engine", "hbs");
 app.use(express.urlencoded({ extended: true }));
 
 //- set route
-app.get("/", (req, res) => {
-  return res.render("index");
-});
-
-app.get("/new", (req, res) => {
-  return res.render("new");
-});
-
-app.post("/new", (req, res) => {
-  console.log(req.body);
-  return;
-});
+app.use(routes);
 
 //- listen to server
 app.listen(port, () => {
