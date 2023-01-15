@@ -96,7 +96,18 @@ router.post("/edit/:_id", async (req, res) => {
       }
     );
     return res.redirect("/records");
-  } catch (error) {
+  } catch (err) {
+    return res.render("error", { err });
+  }
+});
+
+//- 刪除record
+router.post("/delete/:_id", async (req, res) => {
+  try {
+    const { _id } = req.params;
+    await Record.findByIdAndDelete({ _id });
+    return res.redirect("/records");
+  } catch (err) {
     return res.render("error", { err });
   }
 });
