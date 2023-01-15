@@ -55,7 +55,7 @@ router.post("/new", async (req, res) => {
       amount,
       categoryId,
     });
-    return res.redirect("/");
+    return res.redirect("/records");
   } catch (err) {
     return res.render("error", { err });
   }
@@ -70,6 +70,33 @@ router.get("/edit/:_id", async (req, res) => {
     const category = record.categoryId.name;
     return res.render("edit", { record, category });
   } catch (err) {
+    return res.render("error", { err });
+  }
+});
+
+//- 修改record
+router.post("/edit/:_id", async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const { name, date, amount, category } = req.body;
+    let foundCategory = await Category.findOne({ name: category });
+    if (!foundCategory) {
+      const icon = getCategoryIcon(category);
+      foundCategory = await Category.create({ name: category, icon });
+    }
+    //- 修改Record
+    const categoryId = foundCategory._id;
+    await Record.findOneAndUpdate(
+      { _id },
+      {
+        name,
+        date,
+        amount,
+        categoryId,
+      }
+    );
+    return res.redirect("/records");
+  } catch (error) {
     return res.render("error", { err });
   }
 });
