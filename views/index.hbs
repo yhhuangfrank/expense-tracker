@@ -13,27 +13,14 @@
   <h1 class="col-4 fs-3">總金額: </h1>
   <p class="col-8 text-center fs-1 fw-bold totalAmountContainer">我是總金額</p>
 </div>
-
+{{!-- Records area --}}
 <table class="table table-striped">
   <tbody>
-    <tr class="align-middle">
-      <td class="col-1 text-center"><i class="fa-solid fa-house"></i></td>
-      <td>
-        消費1
-        <br />
-        2023/01/01
-      </td>
-      <td>金額</td>
-      <td class="text-end">
-        <a href="/" class="btn btn-dark">修改</a>
-        <form action="" style="display: inline;">
-          <button href="/" class="btn btn-danger">刪除</button>
-        </form>
-      </td>
-    </tr>
     {{#each records}}
       <tr class="align-middle">
-        <td class="col-1 text-center"><i class="fa-solid fa-house"></i></td>
+        <td class="col-1 text-center"><i
+            class="{{this.categoryId.icon}}"
+          ></i></td>
         <td>
           {{this.name}}
           <br />
