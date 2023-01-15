@@ -8,19 +8,18 @@ const { getCategoryIcon } = require("../../helpers/categoryHelper");
 //- 顯示所有records
 router.get("/", async (req, res) => {
   try {
-    const records = await Record.find().populate("categoryId").lean();
-    const recordsAggregation = await Record.aggregate([
-      {
-        $match: {},
-      },
-      {
-        $group: {
-          _id: null,
-          totalAmount: { $sum: "$amount" },
+    const [records, sum] = await Promise.all([
+      Record.find().populate("categoryId").lean(),
+      Record.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalAmount: { $sum: "$amount" },
+          },
         },
-      },
+      ]),
     ]);
-    const { totalAmount } = recordsAggregation[0];
+    const { totalAmount } = sum[0];
     //- 處理日期格式
     dateHelper(records);
     return res.render("index", { records, totalAmount });
