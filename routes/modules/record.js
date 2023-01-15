@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const Record = require("../../models/records");
 const Category = require("../../models/categories");
-const dayjs = require("dayjs"); //- 處理日期格式套件
+const dayjs = require("dayjs");
+const dateHelper = require("../../helpers/dateHelper");
 const { getCategoryIcon } = require("../../helpers/categoryHelper");
 
 //- 顯示所有records
@@ -21,10 +22,7 @@ router.get("/", async (req, res) => {
     ]);
     const { totalAmount } = recordsAggregation[0];
     //- 處理日期格式
-    records.forEach((record) => {
-      record.date = dayjs(record.date).format("YYYY/MM/DD");
-    });
-
+    dateHelper(records);
     return res.render("index", { records, totalAmount });
   } catch (err) {
     return res.render("error", { err });

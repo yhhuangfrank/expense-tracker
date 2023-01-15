@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Record = require("../../models/records");
 const Category = require("../../models/categories");
-const dayjs = require("dayjs"); //- 處理日期格式套件
+const dateHelper = require("../../helpers/dateHelper");
 
 router.get("/", async (req, res) => {
   try {
@@ -15,6 +15,7 @@ router.get("/", async (req, res) => {
         ]),
       ]);
       const { totalAmount } = sum[0];
+      dateHelper(records);
       return res.render("index", { records, category, totalAmount });
     }
     //- other cases
@@ -32,9 +33,7 @@ router.get("/", async (req, res) => {
       ]),
     ]);
     const { totalAmount } = sum[0];
-    records.forEach((record) => {
-      record.date = dayjs(record.date).format("YYYY/MM/DD");
-    });
+    dateHelper(records);
     return res.render("index", { records, category, totalAmount });
   } catch (err) {
     return res.render("error", err);
