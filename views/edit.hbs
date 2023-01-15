@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-8 mx-auto">
+    <form action="/records/new" method="POST">
+      <div class="mb-3">
+        <label for="name" class="form-label">名稱</label>
+        <input
+          type="name"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="支出名稱"
+          value="{{record.name}}"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="date" class="form-label">日期</label>
+        <input
+          type="text"
+          class="form-control"
+          id="date"
+          name="date"
+          onfocus="(this.type='date')"
+          placeholder="YYYY/MM/DD"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="amount" class="form-label">金額</label>
+        <input
+          type="number"
+          class="form-control"
+          id="amount"
+          name="amount"
+          min="0"
+          placeholder="輸入金額"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="category" class="form-label">種類</label>
+        <select class="form-control" name="category" id="category">
+          <option value="home" {{isSelected category "home"}}>家居物業</option>
+          <option
+            value="transport"
+            {{isSelected category "transport"}}
+          >交通出行</option>
+          <option
+            value="entertainment"
+            {{isSelected category "entertainment"}}
+          >休閒娛樂</option>
+          <option value="food" {{isSelected category "food"}}>餐飲食品</option>
+          <option value="other" {{isSelected category "other"}}>其他</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

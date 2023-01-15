@@ -2,7 +2,9 @@ const router = require("express").Router();
 const Record = require("../../models/records");
 const Category = require("../../models/categories");
 const dayjs = require("dayjs"); //- 處理日期格式套件
+const { getCategoryIcon } = require("../../helpers/categoryHelper");
 
+//- 顯示所有records
 router.get("/", async (req, res) => {
   try {
     const records = await Record.find().populate("categoryId").lean();
@@ -30,10 +32,12 @@ router.get("/", async (req, res) => {
   }
 });
 
+//- 導向新增record頁面
 router.get("/new", (req, res) => {
   return res.render("new");
 });
 
+//- 新增record
 router.post("/new", async (req, res) => {
   try {
     const { name, date, amount, category } = req.body;
@@ -41,26 +45,10 @@ router.post("/new", async (req, res) => {
     let foundCategory = await Category.findOne({ name: category });
     if (!foundCategory) {
       //- 如果沒有建立過此種類
-      let icon = "";
-      switch (category) {
-        case "home":
-          icon = "fa-solid fa-house";
-          break;
-        case "transport":
-          icon = "fa-solid fa-van-shuttle";
-          break;
-        case "entertainment":
-          icon = "fa-solid fa-face-grin-beam";
-          break;
-        case "food":
-          icon = "fa-solid fa-utensils";
-          break;
-        case "other":
-          icon = "fa-solid fa-pen";
-          break;
-      }
+      const icon = getCategoryIcon(category);
       foundCategory = await Category.create({ name: category, icon });
     }
+    //- 建立Record
     const categoryId = foundCategory._id;
     await Record.create({
       name,
@@ -72,6 +60,14 @@ router.post("/new", async (req, res) => {
   } catch (err) {
     return res.render("error", { err });
   }
+});
+
+//- 導向修改record頁
+router.get("/edit/:_id", async (req, res) => {
+  const { _id } = req.params;
+  const record = await Record.findById(_id).populate("categoryId").lean();
+  const category = record.categoryId.name;
+  return res.render("edit", { record, category });
 });
 
 module.exports = router;
