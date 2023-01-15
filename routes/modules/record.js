@@ -19,7 +19,6 @@ router.get("/", async (req, res) => {
         },
       },
     ]);
-    // console.log(records);
     const { totalAmount } = recordsAggregation[0];
     //- 處理日期格式
     records.forEach((record) => {
@@ -64,10 +63,15 @@ router.post("/new", async (req, res) => {
 
 //- 導向修改record頁
 router.get("/edit/:_id", async (req, res) => {
-  const { _id } = req.params;
-  const record = await Record.findById(_id).populate("categoryId").lean();
-  const category = record.categoryId.name;
-  return res.render("edit", { record, category });
+  try {
+    const { _id } = req.params;
+    const record = await Record.findById(_id).populate("categoryId").lean();
+    record.date = dayjs(record.date).format("YYYY-MM-DD");
+    const category = record.categoryId.name;
+    return res.render("edit", { record, category });
+  } catch (err) {
+    return res.render("error", { err });
+  }
 });
 
 module.exports = router;

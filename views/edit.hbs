@@ -1,8 +1,16 @@
 <div class="row">
   <div class="col-8 mx-auto">
-    <form action="/records/new" method="POST">
-      <div class="mb-3">
-        <label for="name" class="form-label">名稱</label>
+    <div class="row">
+      <div class="col-4">
+        <h5>*必填欄位</h5>
+      </div>
+      <div class="col-7">
+        <h1>請修改你的支出</h1>
+      </div>
+    </div>
+    <form action="/records/new" method="POST" class="mt-2">
+      <div class="input-group mb-4">
+        <sapn class="input-group-text">名稱*</sapn>
         <input
           type="name"
           class="form-control"
@@ -12,8 +20,8 @@
           value="{{record.name}}"
         />
       </div>
-      <div class="mb-3">
-        <label for="date" class="form-label">日期</label>
+      <div class="input-group mb-4">
+        <sapn class="input-group-text">日期*</sapn>
         <input
           type="text"
           class="form-control"
@@ -21,21 +29,11 @@
           name="date"
           onfocus="(this.type='date')"
           placeholder="YYYY/MM/DD"
+          value="{{record.date}}"
         />
       </div>
-      <div class="mb-3">
-        <label for="amount" class="form-label">金額</label>
-        <input
-          type="number"
-          class="form-control"
-          id="amount"
-          name="amount"
-          min="0"
-          placeholder="輸入金額"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="category" class="form-label">種類</label>
+      <div class="input-group mb-4">
+        <sapn class="input-group-text">種類*</sapn>
         <select class="form-control" name="category" id="category">
           <option value="home" {{isSelected category "home"}}>家居物業</option>
           <option
@@ -50,7 +48,21 @@
           <option value="other" {{isSelected category "other"}}>其他</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="input-group mb-4">
+        <sapn class="input-group-text">金額*</sapn>
+        <input
+          type="number"
+          class="form-control"
+          id="amount"
+          name="amount"
+          min="0"
+          placeholder="輸入金額"
+          value="{{record.amount}}"
+        />
+      </div>
+      <div class="d-grid col-auto mx-auto">
+        <button type="submit" class="btn btn-primary">送出</button>
+      </div>
     </form>
   </div>
 </div>

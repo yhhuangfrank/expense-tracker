@@ -1,18 +1,27 @@
 <div class="row">
   <div class="col-8 mx-auto">
-    <form action="/records/new" method="POST">
-      <div class="mb-3">
-        <label for="name" class="form-label">名稱</label>
+    <div class="row">
+      <div class="col-4">
+        <h5>*必填欄位</h5>
+      </div>
+      <div class="col-7">
+        <h1>請輸入你的支出</h1>
+      </div>
+    </div>
+    <form action="/records/new" method="POST" class="mt-2">
+      <div class="input-group mb-4">
+        <sapn class="input-group-text">名稱*</sapn>
         <input
           type="name"
           class="form-control"
           id="name"
           name="name"
           placeholder="支出名稱"
+          value="{{record.name}}"
         />
       </div>
-      <div class="mb-3">
-        <label for="date" class="form-label">日期</label>
+      <div class="input-group mb-4">
+        <sapn class="input-group-text">日期*</sapn>
         <input
           type="text"
           class="form-control"
@@ -20,10 +29,27 @@
           name="date"
           onfocus="(this.type='date')"
           placeholder="YYYY/MM/DD"
+          value="{{record.date}}"
         />
       </div>
-      <div class="mb-3">
-        <label for="amount" class="form-label">金額</label>
+      <div class="input-group mb-4">
+        <sapn class="input-group-text">種類*</sapn>
+        <select class="form-control" name="category" id="category">
+          <option value="home" {{isSelected category "home"}}>家居物業</option>
+          <option
+            value="transport"
+            {{isSelected category "transport"}}
+          >交通出行</option>
+          <option
+            value="entertainment"
+            {{isSelected category "entertainment"}}
+          >休閒娛樂</option>
+          <option value="food" {{isSelected category "food"}}>餐飲食品</option>
+          <option value="other" {{isSelected category "other"}}>其他</option>
+        </select>
+      </div>
+      <div class="input-group mb-4">
+        <sapn class="input-group-text">金額*</sapn>
         <input
           type="number"
           class="form-control"
@@ -31,19 +57,12 @@
           name="amount"
           min="0"
           placeholder="輸入金額"
+          value="{{record.amount}}"
         />
       </div>
-      <div class="mb-3">
-        <label for="category" class="form-label">種類</label>
-        <select class="form-control" name="category" id="category">
-          <option value="home">家居物業</option>
-          <option value="transport">交通出行</option>
-          <option value="entertainment">休閒娛樂</option>
-          <option value="food">餐飲食品</option>
-          <option value="other">其他</option>
-        </select>
+      <div class="d-grid col-auto mx-auto">
+        <button type="submit" class="btn btn-primary">新增支出</button>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
   </div>
 </div>
