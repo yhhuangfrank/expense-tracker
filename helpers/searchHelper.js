@@ -1,3 +1,5 @@
+const dayjs = require("dayjs");
+
 function getCategoryIcon(categoryValue) {
   let icon = "";
   switch (categoryValue) {
@@ -39,7 +41,30 @@ function sortHandling(sort) {
   return result;
 }
 
+function dateRange(startDate, endDate) {
+  let option = {};
+  if (startDate && endDate) {
+    option.date = {
+      $gte: new Date(startDate),
+      $lte: new Date(endDate),
+    };
+  }
+  if (startDate && !endDate) {
+    option.date = {
+      $gte: new Date(startDate),
+      $lte: new Date(dayjs().format("YYYY-MM-DD")),
+    };
+  }
+  if (!startDate && endDate) {
+    option.date = {
+      $lte: new Date(endDate),
+    };
+  }
+  return option;
+}
+
 module.exports = {
   getCategoryIcon,
   sortHandling,
+  dateRange,
 };

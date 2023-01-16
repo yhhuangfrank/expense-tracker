@@ -54,7 +54,31 @@
         </div>
       </div>
     </div>
-
+    {{! date }}
+    <div class="d-grid col-8 mx-auto">
+      <div class="input-group mb-3">
+        <sapn class="input-group-text">起始日期</sapn>
+        <input
+          type="date"
+          class="form-control"
+          id="date"
+          name="startDate"
+          onchange="this.form.submit()"
+          value="{{startDate}}"
+        />
+      </div>
+      <div class="input-group mb-3">
+        <sapn class="input-group-text">結束日期</sapn>
+        <input
+          type="date"
+          class="form-control"
+          id="date"
+          name="endDate"
+          onchange="this.form.submit()"
+          value="{{endDate}}"
+        />
+      </div>
+    </div>
   </form>
 </div>
 
