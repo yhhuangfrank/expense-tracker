@@ -3,13 +3,13 @@ const Record = require("../../models/records");
 const Category = require("../../models/categories");
 const dayjs = require("dayjs");
 const dateHelper = require("../../helpers/dateHelper");
-const { getCategoryIcon } = require("../../helpers/categoryHelper");
+const { getCategoryIcon } = require("../../helpers/searchHelper");
 
 //- 顯示所有records
 router.get("/", async (req, res) => {
   try {
     const [records, sum] = await Promise.all([
-      Record.find().populate("categoryId").lean(),
+      Record.find().populate("categoryId").sort({ amount: "desc" }).lean(),
       Record.aggregate([
         {
           $group: {

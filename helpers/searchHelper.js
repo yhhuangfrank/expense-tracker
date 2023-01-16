@@ -20,6 +20,26 @@ function getCategoryIcon(categoryValue) {
   return icon;
 }
 
+function sortHandling(sort) {
+  let result = {};
+  switch (sort) {
+    case "amountDesc":
+      result.amount = "desc";
+      break;
+    case "amountAsc":
+      result.amount = "asc";
+      break;
+    case "dateDesc":
+      result.date = "desc";
+      break;
+    case "dateAsc":
+      result.date = "asc";
+      break;
+  }
+  return result;
+}
+
 module.exports = {
   getCategoryIcon,
+  sortHandling,
 };

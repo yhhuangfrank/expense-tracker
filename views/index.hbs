@@ -1,25 +1,62 @@
-<form action="/search" method="GET">
-  <div class="input-group mb-3">
-    <select
-      class="form-select"
-      name="category"
-      onchange="this.form.submit()"
-    >
-      <option value="all" {{isSelected category "all"}}>全部</option>
-      <option value="home" {{isSelected category "home"}}>家居物業</option>
-      <option
-        value="transport"
-        {{isSelected category "transport"}}
-      >交通出行</option>
-      <option
-        value="entertainment"
-        {{isSelected category "entertainment"}}
-      >休閒娛樂</option>
-      <option value="food" {{isSelected category "food"}}>餐飲食品</option>
-      <option value="other" {{isSelected category "other"}}>其他</option>
-    </select>
-  </div>
-</form>
+<div class="row mx-auto">
+  <form action="/search" method="GET">
+    <div class="row">
+      {{! category }}
+      <div class="col mx-auto">
+        <div class="input-group mb-3">
+          <select
+            class="form-select"
+            name="category"
+            onchange="this.form.submit()"
+          >
+            <option value="all" {{isSelected category "all"}}>全部</option>
+            <option
+              value="home"
+              {{isSelected category "home"}}
+            >家居物業</option>
+            <option
+              value="transport"
+              {{isSelected category "transport"}}
+            >交通出行</option>
+            <option
+              value="entertainment"
+              {{isSelected category "entertainment"}}
+            >休閒娛樂</option>
+            <option
+              value="food"
+              {{isSelected category "food"}}
+            >餐飲食品</option>
+            <option value="other" {{isSelected category "other"}}>其他</option>
+          </select>
+        </div>
+      </div>
+      {{! sort  }}
+      <div class="col mx-auto">
+        <div class="input-group mb-3">
+          <select class="form-select" name="sort" onchange="this.form.submit()">
+            <option
+              value="amountDesc"
+              {{isSelected sort "amountDesc"}}
+            >金額由大到小</option>
+            <option
+              value="amountAsc"
+              {{isSelected sort "amountAsc"}}
+            >金額由小到大</option>
+            <option
+              value="dateDesc"
+              {{isSelected sort "dateDesc"}}
+            >日期由近到遠</option>
+            <option
+              value="dateAsc"
+              {{isSelected sort "dateAsc"}}
+            >日期由遠到近</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
 
 <div class="row">
   <h1 class="col-4 fs-3">總金額: </h1>
