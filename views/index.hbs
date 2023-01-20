@@ -131,11 +131,13 @@
   <div class="row mt-2">
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
+        {{{isHasPrevPage
+          paginationOption.category
+          paginationOption.sort
+          paginationOption.startDate
+          paginationOption.endDate
+          paginationOption.currentPage
+        }}}
         {{{paginator
           paginationOption.category
           paginationOption.sort
@@ -145,11 +147,15 @@
           paginationOption.recordsAmount
           paginationOption.NUM_PER_PAGE
         }}}
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
+        {{{isHasNextPage
+          paginationOption.category
+          paginationOption.sort
+          paginationOption.startDate
+          paginationOption.endDate
+          paginationOption.currentPage
+          paginationOption.recordsAmount
+          paginationOption.NUM_PER_PAGE
+        }}}
       </ul>
     </nav>
   </div>

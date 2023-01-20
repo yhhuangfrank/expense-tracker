@@ -2,7 +2,12 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const routes = require("./routes/index");
-const { isSelected, paginator } = require("./helpers/handlebarsHelper");
+const {
+  isSelected,
+  paginator,
+  isHasPrevPage,
+  isHasNextPage,
+} = require("./helpers/handlebarsHelper");
 const app = express();
 const port = 3000;
 
@@ -13,7 +18,12 @@ require("./config/mongoose");
 const hbs = exphbs.create({
   extname: "hbs",
   defaultLayout: "main",
-  helpers: { isSelected: isSelected, paginator: paginator },
+  helpers: {
+    isSelected: isSelected,
+    paginator: paginator,
+    isHasPrevPage: isHasPrevPage,
+    isHasNextPage: isHasNextPage,
+  },
 });
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
