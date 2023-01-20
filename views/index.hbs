@@ -89,62 +89,68 @@
   >{{totalAmount}}</p>
 </div>
 {{! Records area }}
-<table class="table table-striped">
-  <tbody>
-    {{#each records}}
-      <tr class="align-middle">
-        <td class="col-1 text-center"><i
-            class="{{this.categoryId.icon}}"
-          ></i></td>
-        <td>
-          {{this.name}}
-          <br />
-          {{this.date}}
-        </td>
-        <td>{{this.amount}}</td>
-        <td class="text-end">
-          <a href="/records/edit/{{this._id}}" class="btn btn-dark">修改</a>
-          <form
-            action="/records/delete/{{this._id}}"
-            method="POST"
-            style="display: inline;"
-          >
-            <button type="submit" class="btn btn-danger">刪除</button>
-          </form>
-        </td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
-{{!-- create new record --}}
+{{#if records}}
+  <table class="table table-striped">
+    <tbody>
+      {{#each records}}
+        <tr class="align-middle">
+          <td class="col-1 text-center"><i
+              class="{{this.categoryId.icon}}"
+            ></i></td>
+          <td>
+            {{this.name}}
+            <br />
+            {{this.date}}
+          </td>
+          <td>{{this.amount}}</td>
+          <td class="text-end">
+            <a href="/records/edit/{{this._id}}" class="btn btn-dark">修改</a>
+            <form
+              action="/records/delete/{{this._id}}"
+              method="POST"
+              style="display: inline;"
+            >
+              <button type="submit" class="btn btn-danger">刪除</button>
+            </form>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <h1 class="text-center">No records...</h1>
+{{/if}}
+{{! create new record }}
 <div class="row">
   <div class="col mx-auto text-center">
     <a href="/records/new" class="btn btn-primary">新增支出</a>
   </div>
 </div>
-{{!-- pagination --}}
-<div class="row mt-2">
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      {{{paginator
-        paginationOption.category
-        paginationOption.sort
-        paginationOption.startDate
-        paginationOption.endDate
-        paginationOption.currentPage
-        paginationOption.recordsAmount
-        paginationOption.NUM_PER_PAGE
-      }}}
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-</div>
+{{! pagination }}
+{{#if records}}
+  <div class="row mt-2">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {{{paginator
+          paginationOption.category
+          paginationOption.sort
+          paginationOption.startDate
+          paginationOption.endDate
+          paginationOption.currentPage
+          paginationOption.recordsAmount
+          paginationOption.NUM_PER_PAGE
+        }}}
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+{{/if}}

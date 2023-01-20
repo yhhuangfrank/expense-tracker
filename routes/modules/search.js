@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     const category = req.query.category ? req.query.category : "all";
     const endDate = req.query.endDate
       ? req.query.endDate
-      : dayjs().format("YYYY-MM-DD");
+      : dayjs().format("YYYY-MM-DD"); //- 若無選擇則預設結束時間為今日
     const findOption = dateRange(startDate, endDate);
     const currentPage = req.query.page ? Number(req.query.page) : 1;
     const NUM_PER_PAGE = 1;
