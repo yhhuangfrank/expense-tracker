@@ -8,21 +8,38 @@ const { getCategoryIcon } = require("../../helpers/searchHelper");
 //- 顯示所有records
 router.get("/", async (req, res) => {
   try {
-    const [records, sum] = await Promise.all([
-      Record.find().populate("categoryId").sort({ amount: "desc" }).lean(),
+    const currentPage = req.query.page ? Number(req.query.page) : 1;
+    const NUM_PER_PAGE = 1;
+    const [records, recordsAmount, sum] = await Promise.all([
+      Record.find({})
+        .populate("categoryId")
+        .sort({ amount: "desc" }) //- 預設排序
+        .limit(NUM_PER_PAGE)
+        .lean(),
+      Record.count(),
       Record.aggregate([
-        {
-          $group: {
-            _id: null,
-            totalAmount: { $sum: "$amount" },
-          },
-        },
+        { $group: { _id: null, totalAmount: { $sum: "$amount" } } },
       ]),
     ]);
     const { totalAmount } = sum[0];
+    //- 處理分頁所需資訊
+    const paginationOption = {
+      category: "all",
+      sort: "amountDesc",
+      startDate: "",
+      endDate: "",
+      currentPage,
+      recordsAmount,
+      NUM_PER_PAGE
+    };
     //- 處理日期格式
     dateHelper(records);
-    return res.render("index", { records, totalAmount });
+    return res.render("index", {
+      records,
+      totalAmount,
+      recordsAmount,
+      paginationOption,
+    });
   } catch (err) {
     return res.render("error", { err });
   }

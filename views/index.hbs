@@ -116,9 +116,35 @@
     {{/each}}
   </tbody>
 </table>
-
+{{!-- create new record --}}
 <div class="row">
   <div class="col mx-auto text-center">
     <a href="/records/new" class="btn btn-primary">新增支出</a>
   </div>
+</div>
+{{!-- pagination --}}
+<div class="row mt-2">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {{{paginator
+        paginationOption.category
+        paginationOption.sort
+        paginationOption.startDate
+        paginationOption.endDate
+        paginationOption.currentPage
+        paginationOption.recordsAmount
+        paginationOption.NUM_PER_PAGE
+      }}}
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>

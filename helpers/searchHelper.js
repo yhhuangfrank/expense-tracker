@@ -23,22 +23,22 @@ function getCategoryIcon(categoryValue) {
 }
 
 function sortHandling(sort) {
-  let result = {};
+  let option = {};
   switch (sort) {
     case "amountDesc":
-      result.amount = "desc";
+      option.amount = "desc";
       break;
     case "amountAsc":
-      result.amount = "asc";
+      option.amount = "asc";
       break;
     case "dateDesc":
-      result.date = "desc";
+      option.date = "desc";
       break;
     case "dateAsc":
-      result.date = "asc";
+      option.date = "asc";
       break;
   }
-  return result;
+  return option;
 }
 
 function dateRange(startDate, endDate) {
