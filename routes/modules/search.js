@@ -42,6 +42,11 @@ router.get("/", async (req, res) => {
       ]),
     ]);
     //- variables for pagination
+    const totalPages = Math.ceil(recordsAmount / NUM_PER_PAGE);
+    const prevPage = currentPage - 1;
+    const nextPage = currentPage + 1;
+    const isHasPrevPage = prevPage > 0 ? true : false;
+    const isHasNextPage = nextPage <= totalPages ? true : false;
     const paginationOption = {
       category,
       sort,
@@ -50,6 +55,10 @@ router.get("/", async (req, res) => {
       currentPage,
       recordsAmount,
       NUM_PER_PAGE,
+      isHasPrevPage,
+      isHasNextPage,
+      prevPage,
+      nextPage,
     };
     //- calculate totalAmount
     let totalAmount;

@@ -8,8 +8,11 @@ const { getCategoryIcon } = require("../../helpers/searchHelper");
 //- 顯示所有records
 router.get("/", async (req, res) => {
   try {
-    const currentPage = req.query.page ? Number(req.query.page) : 1;
+    const currentPage = 1; //- 首頁預設顯示在第一頁
     const NUM_PER_PAGE = 1;
+    const isHasPrevPage = false;
+    const isHasNextPage = true;
+    const nextPage = 2;
     const [records, recordsAmount, sum] = await Promise.all([
       Record.find({})
         .populate("categoryId")
@@ -30,7 +33,10 @@ router.get("/", async (req, res) => {
       endDate: "",
       currentPage,
       recordsAmount,
-      NUM_PER_PAGE
+      NUM_PER_PAGE,
+      isHasPrevPage,
+      isHasNextPage,
+      nextPage
     };
     //- 處理日期格式
     dateHelper(records);

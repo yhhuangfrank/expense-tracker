@@ -2,12 +2,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const routes = require("./routes/index");
-const {
-  isSelected,
-  paginator,
-  isHasPrevPage,
-  isHasNextPage,
-} = require("./helpers/handlebarsHelper");
+const { isSelected, paginator } = require("./helpers/handlebarsHelper");
 const app = express();
 const port = 3000;
 
@@ -21,8 +16,6 @@ const hbs = exphbs.create({
   helpers: {
     isSelected: isSelected,
     paginator: paginator,
-    isHasPrevPage: isHasPrevPage,
-    isHasNextPage: isHasNextPage,
   },
 });
 app.engine("hbs", hbs.engine);

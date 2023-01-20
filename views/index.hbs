@@ -131,13 +131,17 @@
   <div class="row mt-2">
     <nav aria-label="Page navigation example">
       <ul class="pagination justify-content-center">
-        {{{isHasPrevPage
-          paginationOption.category
-          paginationOption.sort
-          paginationOption.startDate
-          paginationOption.endDate
-          paginationOption.currentPage
-        }}}
+        {{#if paginationOption.isHasPrevPage}}
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="/search?category={{paginationOption.category}}&sort={{paginationOption.sort}}&startDate={{paginationOption.startDate}}&endDate={{paginationOption.endDate}}&page={{paginationOption.prevPage}}"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {{/if}}
         {{{paginator
           paginationOption.category
           paginationOption.sort
@@ -147,15 +151,17 @@
           paginationOption.recordsAmount
           paginationOption.NUM_PER_PAGE
         }}}
-        {{{isHasNextPage
-          paginationOption.category
-          paginationOption.sort
-          paginationOption.startDate
-          paginationOption.endDate
-          paginationOption.currentPage
-          paginationOption.recordsAmount
-          paginationOption.NUM_PER_PAGE
-        }}}
+        {{#if paginationOption.isHasNextPage}}
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="/search?category={{paginationOption.category}}&sort={{paginationOption.sort}}&startDate={{paginationOption.startDate}}&endDate={{paginationOption.endDate}}&page={{paginationOption.nextPage}}"
+              aria-label="Next"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {{/if}}
       </ul>
     </nav>
   </div>
