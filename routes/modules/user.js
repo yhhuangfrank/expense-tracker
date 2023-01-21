@@ -11,6 +11,24 @@ router.post("/register", async (req, res) => {
   try {
     const { name, email, password, confirmPassword } = req.body;
     const foundUser = await User.findOne({ email });
+    //- 檢查註冊表單
+    let fail_msgs = [];
+    if (!name || !email || !password || !confirmPassword) {
+      fail_msgs.push({ message: "所有欄位為必填!" });
+    }
+    if (password !== confirmPassword) {
+      fail_msgs.push({ message: "密碼與確認密碼不符!" });
+    }
+    if (fail_msgs.length) {
+      return res.render("register", {
+        name,
+        email,
+        password,
+        confirmPassword,
+        fail_msgs,
+      });
+    }
+    //- 表單輸入正確情形
     if (foundUser) {
       return res.render("register", { name, email, password, confirmPassword });
     } else {
