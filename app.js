@@ -3,6 +3,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const session = require("express-session");
 const flash = require("connect-flash");
+const usePassport = require("./config/passport");
 const routes = require("./routes/index");
 const { isSelected, paginator } = require("./helpers/handlebarsHelper");
 const app = express();
@@ -24,7 +25,6 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 
 //- middlewares
-app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -33,7 +33,11 @@ app.use(
     cookie: { secure: false },
   })
 );
+app.use(express.urlencoded({ extended: true }));
 app.use(flash());
+
+//- use passport
+usePassport(app);
 
 //- middleware for flash message
 app.use((req, res, next) => {
