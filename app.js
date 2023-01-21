@@ -1,6 +1,8 @@
 //- require related modules
 const express = require("express");
 const exphbs = require("express-handlebars");
+const session = require("express-session");
+const flash = require("connect-flash");
 const routes = require("./routes/index");
 const { isSelected, paginator } = require("./helpers/handlebarsHelper");
 const app = express();
@@ -21,8 +23,25 @@ const hbs = exphbs.create({
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 
-//- middleware
+//- middlewares
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  })
+);
+app.use(flash());
+
+//- middleware for flash message
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.warning_msg = req.flash("warning_msg");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 //- set route
 app.use(routes);

@@ -12,11 +12,11 @@ router.post("/register", async (req, res) => {
     const { name, email, password, confirmPassword } = req.body;
     const foundUser = await User.findOne({ email });
     if (foundUser) {
-      console.log("此用戶已註冊過!");
       return res.render("register", { name, email, password, confirmPassword });
     } else {
       //- 建立新用戶
       await User.create({ name, email, password });
+      req.flash("success_msg", "註冊成功! 可進行登入了!");
       return res.redirect("/");
     }
   } catch (err) {
