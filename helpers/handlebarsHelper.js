@@ -19,6 +19,22 @@ function paginator(
     untilPage = totalPages;
   }
   let pagination = "";
+  //- 當總頁數為7頁以上，過濾多餘頁數及新增第一頁、最後頁連結
+  if (totalPages >= 7) {
+    //- 目前頁面超過第二頁，顯示第一頁連結
+    if (currentPage > 2) {
+      pagination += `
+    <li class="page-item"><a class="page-link" href="/search?category=${category}&sort=${sort}&startDate=${startDate}&endDate=${endDate}&page=1">1</a></li>
+    `;
+    }
+    //- 過濾中間頁
+    if (currentPage > 3) {
+      pagination += `
+    <li class="page-item disabled"><a class="page-link">...</a></li>
+    `;
+    }
+  }
+
   for (let i = fromPage; i <= untilPage; i += 1) {
     if (i <= 0) {
       continue;
@@ -30,6 +46,21 @@ function paginator(
     } else {
       pagination += `
       <li class="page-item"><a class="page-link" href="/search?category=${category}&sort=${sort}&startDate=${startDate}&endDate=${endDate}&page=${i}">${i}</a></li>
+      `;
+    }
+  }
+
+  //- 當總頁數為7頁以上，過濾多餘頁數及新增第一頁、最後頁連結
+  if (totalPages >= 7) {
+    //- 過濾中間頁
+    if (untilPage < totalPages - 1) {
+      pagination += `
+      <li class="page-item disabled"><a class="page-link">...</a></li>
+      `;
+    }
+    if (untilPage < totalPages) {
+      pagination += `
+      <li class="page-item"><a class="page-link" href="/search?category=${category}&sort=${sort}&startDate=${startDate}&endDate=${endDate}&page=${totalPages}">${totalPages}</a></li>
       `;
     }
   }
