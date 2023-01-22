@@ -13,7 +13,19 @@ router.get(
   passport.authenticate("facebook", {
     failureRedirect: "/",
     successRedirect: "/records",
-    failureFlash: true,
+  })
+);
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/",
+    successRedirect: "/records",
   })
 );
 

@@ -1,6 +1,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const FacebbokStrategy = require("passport-facebook");
+const GoogleStrategy = require("passport-google-oauth20");
 const bcrypt = require("bcryptjs");
 const User = require("../models/users");
 
@@ -45,9 +46,34 @@ module.exports = (app) => {
         try {
           const { name, email } = profile._json;
           //- 檢查user
-          const foundUser = await User.findOne({ email }).lean();
+          const foundUser = await User.findOne({ email, name }).lean();
           if (foundUser) return done(null, foundUser);
           //- 若為新用戶
+          const randomPassword = Math.random().toString(36).slice(-8);
+          const hash = bcrypt.hashSync(randomPassword, 10);
+          const newUser = await User.create({ name, email, password: hash });
+          return done(null, newUser);
+        } catch (err) {
+          return done(err, false);
+        }
+      }
+    )
+  );
+
+  //- Google Strategy
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_ID,
+        clientSecret: process.env.GOOGLE_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK,
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        //- 驗證user
+        try {
+          const { name, email } = profile._json;
+          const foundUser = await User.findOne({ email, name }).lean();
+          if (foundUser) return done(null, foundUser);
           const randomPassword = Math.random().toString(36).slice(-8);
           const hash = bcrypt.hashSync(randomPassword, 10);
           const newUser = await User.create({ name, email, password: hash });
