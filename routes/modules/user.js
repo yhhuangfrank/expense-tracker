@@ -19,7 +19,6 @@ router.get("/register", (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { name, email, password, confirmPassword } = req.body;
-    const foundUser = await User.findOne({ email });
     //- 檢查註冊表單
     let fail_msgs = [];
     if (!name || !email || !password || !confirmPassword) {
@@ -38,6 +37,7 @@ router.post("/register", async (req, res) => {
       });
     }
     //- 表單輸入正確情形
+    const foundUser = await User.findOne({ email }).lean();
     if (foundUser) {
       return res.render("register", { name, email, password, confirmPassword });
     } else {
