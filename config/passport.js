@@ -29,11 +29,9 @@ module.exports = (app) => {
   );
 
   passport.serializeUser((user, done) => {
-    console.log("執行serialization將user._id存入session");
     return done(null, user._id);
   });
   passport.deserializeUser(async (_id, done) => {
-    console.log("執行deserialization使用id查找user");
     try {
       const foundUser = await User.findById(_id).lean();
       return done(null, foundUser);

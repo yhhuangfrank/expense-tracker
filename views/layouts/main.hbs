@@ -14,7 +14,14 @@
   <body class="bg-light">
     <header>
       <nav class="navbar navbar-dark bg-primary px-1">
-        <a href="/records" class="navbar-brand fs-2">我的記帳本</a>
+        {{#if user}}
+          <a href="/records" class="navbar-brand fs-2">{{user.name}}的記帳本</a>
+        {{else}}
+          <a href="/records" class="navbar-brand fs-2">我的記帳本</a>
+        {{/if}}
+        {{#if isAuthenticated}}
+          <a href="/users/logout" class="btn btn-dark me-2">登出</a>
+        {{/if}}
       </nav>
     </header>
     <div class="container mt-3">
