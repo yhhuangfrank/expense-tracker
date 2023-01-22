@@ -7,6 +7,7 @@ const dayjs = require("dayjs");
 
 router.get("/", async (req, res) => {
   try {
+    const userId = req.user._id;
     const { sort, startDate } = req.query;
     const sortOption = sortHandling(sort);
     const category = req.query.category ? req.query.category : "all";
@@ -28,6 +29,7 @@ router.get("/", async (req, res) => {
         break;
     }
     //- several requests to db
+    findOption.userId = userId; //- 新增使用者id的filter option
     const [records, recordsAmount, sum] = await Promise.all([
       Record.find(findOption)
         .populate("categoryId")
@@ -61,7 +63,7 @@ router.get("/", async (req, res) => {
       nextPage,
     };
     //- calculate totalAmount
-    let totalAmount;
+    let totalAmount = 0;
     if (records.length) {
       totalAmount = sum[0].totalAmount;
     }

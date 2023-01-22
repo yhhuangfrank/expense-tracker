@@ -8,24 +8,30 @@ const { getCategoryIcon } = require("../../helpers/searchHelper");
 //- 顯示所有records
 router.get("/", async (req, res) => {
   try {
+    const userId = req.user._id;
     const currentPage = 1; //- 首頁預設顯示在第一頁
     const NUM_PER_PAGE = 1;
-    const isHasPrevPage = false;
-    const isHasNextPage = true;
-    const nextPage = 2;
     const [records, recordsAmount, sum] = await Promise.all([
-      Record.find({})
+      Record.find({ userId })
         .populate("categoryId")
         .sort({ amount: "desc" }) //- 預設排序
         .limit(NUM_PER_PAGE)
         .lean(),
-      Record.count(),
+      Record.count({ userId }),
       Record.aggregate([
+        { $match: { userId } },
         { $group: { _id: null, totalAmount: { $sum: "$amount" } } },
       ]),
     ]);
-    const { totalAmount } = sum[0];
+    let totalAmount = 0;
+    if (records.length) {
+      totalAmount = sum[0].totalAmount;
+    }
     //- 處理分頁所需資訊
+    const totalPages = Math.ceil(recordsAmount / NUM_PER_PAGE);
+    const nextPage = currentPage + 1;
+    const isHasPrevPage = false;
+    const isHasNextPage = nextPage <= totalPages ? true : false;
     const paginationOption = {
       category: "all",
       sort: "amountDesc",
@@ -36,7 +42,7 @@ router.get("/", async (req, res) => {
       NUM_PER_PAGE,
       isHasPrevPage,
       isHasNextPage,
-      nextPage
+      nextPage,
     };
     //- 處理日期格式
     dateHelper(records);
@@ -60,6 +66,7 @@ router.get("/new", (req, res) => {
 router.post("/new", async (req, res) => {
   try {
     const { name, date, amount, category } = req.body;
+    const userId = req.user._id;
     //- 查詢和建立category
     let foundCategory = await Category.findOne({ name: category });
     if (!foundCategory) {
@@ -73,6 +80,7 @@ router.post("/new", async (req, res) => {
       name,
       date,
       amount,
+      userId,
       categoryId,
     });
     return res.redirect("/records");
