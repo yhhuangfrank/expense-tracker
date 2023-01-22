@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../../models/users");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
 
 router.post(
   "/login",
@@ -40,8 +41,9 @@ router.post("/register", async (req, res) => {
     if (foundUser) {
       return res.render("register", { name, email, password, confirmPassword });
     } else {
-      //- 建立新用戶
-      await User.create({ name, email, password });
+      //- 建立新用戶(進行密碼雜湊)
+      const hash = bcrypt.hashSync(password, 10);
+      await User.create({ name, email, password: hash });
       req.flash("success_msg", "註冊成功! 可進行登入了!");
       return res.redirect("/");
     }
@@ -54,6 +56,7 @@ router.post("/register", async (req, res) => {
 router.get("/logout", (req, res) => {
   req.logOut((err) => {
     if (err) return next(err);
+    req.flash("success_msg", "登出成功!");
     return res.redirect("/");
   });
 });
