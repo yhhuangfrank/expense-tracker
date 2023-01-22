@@ -78,10 +78,11 @@ router.post("/forgot-password", async (req, res) => {
   const secret = process.env.JWT_SECRET + foundUser.password;
   const token = jwt.sign(foundUser, secret, { expiresIn: "10m" }); //- 10mins有效token
   const resetLink = `http://localhost:3000/users/reset-password/${foundUser._id}/${token}`;
-  return res.render("forgot-password", { resetLink });
+  const { _id } = foundUser;
+  return res.render("forgot-password", { resetLink, _id, token });
 });
 
-router.get("/reset-password/:id/:token", (req, res) => {
+router.get("/reset-password/:_id/:token", (req, res) => {
   return res.render("reset-password");
 });
 
