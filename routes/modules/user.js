@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../../models/users");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 router.post(
   "/login",
@@ -63,6 +64,25 @@ router.get("/logout", (req, res) => {
 
 router.get("/forgot-password", (req, res) => {
   return res.render("forgot-password");
+});
+
+router.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+  //- 檢查是否有註冊過
+  const foundUser = await User.findOne({ email }).lean();
+  if (!foundUser) {
+    req.flash("warning_msg", "此用戶尚未註冊過!");
+    return res.redirect("/");
+  }
+  //- 產生token與重設密碼連結
+  const secret = process.env.JWT_SECRET + foundUser.password;
+  const token = jwt.sign(foundUser, secret, { expiresIn: "10m" }); //- 10mins有效token
+  const resetLink = `http://localhost:3000/users/reset-password/${foundUser._id}/${token}`;
+  return res.render("forgot-password", { resetLink });
+});
+
+router.get("/reset-password/:id/:token", (req, res) => {
+  return res.render("reset-password");
 });
 
 module.exports = router;
