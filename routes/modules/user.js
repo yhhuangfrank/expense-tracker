@@ -67,23 +67,71 @@ router.get("/forgot-password", (req, res) => {
 });
 
 router.post("/forgot-password", async (req, res) => {
-  const { email } = req.body;
-  //- 檢查是否有註冊過
-  const foundUser = await User.findOne({ email }).lean();
-  if (!foundUser) {
-    req.flash("warning_msg", "此用戶尚未註冊過!");
-    return res.redirect("/");
+  try {
+    const { email } = req.body;
+    //- 檢查是否有註冊過
+    const foundUser = await User.findOne({ email }).lean();
+    if (!foundUser) {
+      req.flash("warning_msg", "此用戶尚未註冊過!");
+      return res.redirect("/");
+    }
+    //- 產生token與重設密碼連結
+    const secret = process.env.JWT_SECRET + foundUser.password;
+    const token = jwt.sign(foundUser, secret, { expiresIn: "10m" }); //- 10mins有效token
+    const resetLink = `http://localhost:3000/users/reset-password/${foundUser._id}/${token}`;
+    const { _id } = foundUser;
+    return res.render("forgot-password", { resetLink, _id, token });
+  } catch (err) {
+    console.log(err);
+    return res.render("error", { err });
   }
-  //- 產生token與重設密碼連結
-  const secret = process.env.JWT_SECRET + foundUser.password;
-  const token = jwt.sign(foundUser, secret, { expiresIn: "10m" }); //- 10mins有效token
-  const resetLink = `http://localhost:3000/users/reset-password/${foundUser._id}/${token}`;
-  const { _id } = foundUser;
-  return res.render("forgot-password", { resetLink, _id, token });
 });
 
-router.get("/reset-password/:_id/:token", (req, res) => {
-  return res.render("reset-password");
+router.get("/reset-password/:_id/:token", async (req, res) => {
+  try {
+    const { _id, token } = req.params;
+    //- 檢查user
+    const foundUser = await User.findById({ _id }).lean();
+    if (!foundUser) {
+      req.flash("warning_msg", "此用戶尚未註冊!");
+      return res.redirect("/");
+    }
+    //- 檢查token
+    const secret = process.env.JWT_SECRET + foundUser.password;
+    jwt.verify(token, secret);
+    return res.render("reset-password", { _id, token });
+  } catch (err) {
+    console.log(err);
+    return res.render("error", { err });
+  }
+});
+
+router.post("/reset-password/:_id/:token", async (req, res) => {
+  try {
+    const { _id, token } = req.params;
+    //- 檢查user
+    const foundUser = await User.findById({ _id }).lean();
+    if (!foundUser) {
+      req.flash("warning_msg", "此用戶尚未註冊!");
+      return res.redirect("/");
+    }
+    //- 檢查token
+    const secret = process.env.JWT_SECRET + foundUser.password;
+    jwt.verify(token, secret);
+    //- 重設密碼
+    const { newPassword, confirmNewPassword } = req.body;
+    if (newPassword !== confirmNewPassword) {
+      const warning_msg = "密碼與確認密碼不符";
+      return res.render("reset-password", { _id, token, warning_msg });
+    }
+    const hash = bcrypt.hashSync(newPassword, 10);
+    await User.findByIdAndUpdate({ _id }, { password: hash });
+    req.flash("success_msg", "密碼已重設，請再次登入");
+    return res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    return res.render("error", { err });
+  }
 });
 
 module.exports = router;
