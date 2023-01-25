@@ -1,0 +1,22 @@
+[
+  {
+    "name": "home",
+    "icon": "fa-solid fa-house"
+  },
+  {
+    "name": "transport",
+    "icon": "fa-solid fa-van-shuttle"
+  },
+  {
+    "name": "entertainment",
+    "icon": "fa-solid fa-face-grin-beam"
+  },
+  {
+    "name": "food",
+    "icon": "fa-solid fa-utensils"
+  },
+  {
+    "name": "other",
+    "icon": "fa-solid fa-pen"
+  }
+]

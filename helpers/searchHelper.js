@@ -15,7 +15,7 @@ function getCategoryIcon(categoryValue) {
     case "food":
       icon = "fa-solid fa-utensils";
       break;
-    case "other":
+    default:
       icon = "fa-solid fa-pen";
       break;
   }
@@ -25,17 +25,17 @@ function getCategoryIcon(categoryValue) {
 function sortHandling(sort) {
   let option = {};
   switch (sort) {
-    case "amountDesc":
-      option.amount = "desc";
-      break;
-    case "amountAsc":
-      option.amount = "asc";
+    case "dateAsc":
+      option.date = "asc";
       break;
     case "dateDesc":
       option.date = "desc";
       break;
-    case "dateAsc":
-      option.date = "asc";
+    case "amountAsc":
+      option.amount = "asc";
+      break;
+    default:
+      option.amount = "desc";
       break;
   }
   return option;

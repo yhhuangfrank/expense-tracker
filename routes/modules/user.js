@@ -40,7 +40,14 @@ router.post("/register", async (req, res) => {
     //- 表單輸入正確情形
     const foundUser = await User.findOne({ email }).lean();
     if (foundUser) {
-      return res.render("register", { name, email, password, confirmPassword });
+      const warning_msg = "此用戶已經註冊過了!";
+      return res.render("register", {
+        name,
+        email,
+        password,
+        confirmPassword,
+        warning_msg,
+      });
     } else {
       //- 建立新用戶(進行密碼雜湊)
       const hash = bcrypt.hashSync(password, 10);
