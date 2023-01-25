@@ -103,7 +103,7 @@ router.get("/edit/:_id", async (req, res) => {
 });
 
 //- 修改record
-router.post("/edit/:_id", async (req, res) => {
+router.put("/edit/:_id", async (req, res) => {
   try {
     const { _id } = req.params;
     const { name, date, amount, category } = req.body;
@@ -130,7 +130,7 @@ router.post("/edit/:_id", async (req, res) => {
 });
 
 //- 刪除record
-router.post("/delete/:_id", async (req, res) => {
+router.delete("/delete/:_id", async (req, res) => {
   try {
     const { _id } = req.params;
     await Record.findByIdAndDelete({ _id });
