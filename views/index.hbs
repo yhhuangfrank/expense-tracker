@@ -105,13 +105,12 @@
           <td>{{this.amount}}</td>
           <td class="text-end">
             <a href="/records/edit/{{this._id}}" class="btn btn-dark">修改</a>
-            <form
-              action="/records/delete/{{this._id}}?_method=DELETE"
-              method="POST"
-              style="display: inline;"
-            >
-              <button type="submit" class="btn btn-danger">刪除</button>
-            </form>
+            <button
+              type="submit"
+              class="btn btn-danger"
+              data-bs-toggle="modal"
+              data-bs-target="#modal-{{this._id}}"
+            >刪除</button>
           </td>
         </tr>
       {{/each}}
@@ -165,4 +164,51 @@
       </ul>
     </nav>
   </div>
+{{/if}}
+
+{{! modals }}
+{{#if records}}
+  {{#each records}}
+    <div
+      class="modal fade"
+      id="modal-{{this._id}}"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1
+              class="modal-title fs-5"
+              id="exampleModalLabel"
+            >Confirmation</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            您確定要刪除此筆資料嗎?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-dark"
+              data-bs-dismiss="modal"
+            >取消</button>
+            <form
+              action="/records/delete/{{this._id}}?_method=DELETE"
+              method="POST"
+              style="display: inline;"
+            >
+              <button type="submit" class="btn btn-danger">刪除</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/each}}
 {{/if}}
