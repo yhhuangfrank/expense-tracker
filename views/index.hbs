@@ -1,124 +1,137 @@
-<div class="row mx-auto">
-  <form action="/search" method="GET">
-    <div class="row">
-      {{! category }}
-      <div class="col mx-auto">
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <form action="/search" method="GET">
+      <div class="row">
+        {{! category }}
+        <div class="col-11 col-md-6 mx-auto">
+          <div class="input-group mb-3">
+            <select
+              class="form-select"
+              name="category"
+              onchange="this.form.submit()"
+            >
+              <option value="all" {{isSelected category "all"}}>全部</option>
+              <option
+                value="home"
+                {{isSelected category "home"}}
+              >家居物業</option>
+              <option
+                value="transport"
+                {{isSelected category "transport"}}
+              >交通出行</option>
+              <option
+                value="entertainment"
+                {{isSelected category "entertainment"}}
+              >休閒娛樂</option>
+              <option
+                value="food"
+                {{isSelected category "food"}}
+              >餐飲食品</option>
+              <option
+                value="other"
+                {{isSelected category "other"}}
+              >其他</option>
+            </select>
+          </div>
+        </div>
+        {{! sort  }}
+        <div class="col-11 col-md-6 mx-auto">
+          <div class="input-group mb-3">
+            <select
+              class="form-select"
+              name="sort"
+              onchange="this.form.submit()"
+            >
+              <option
+                value="amountDesc"
+                {{isSelected sort "amountDesc"}}
+              >金額由大到小</option>
+              <option
+                value="amountAsc"
+                {{isSelected sort "amountAsc"}}
+              >金額由小到大</option>
+              <option
+                value="dateDesc"
+                {{isSelected sort "dateDesc"}}
+              >日期由近到遠</option>
+              <option
+                value="dateAsc"
+                {{isSelected sort "dateAsc"}}
+              >日期由遠到近</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      {{! date }}
+      <div class="d-grid col-11 col-md-8 mx-auto">
         <div class="input-group mb-3">
-          <select
-            class="form-select"
-            name="category"
+          <sapn class="input-group-text">起始日期</sapn>
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="startDate"
             onchange="this.form.submit()"
-          >
-            <option value="all" {{isSelected category "all"}}>全部</option>
-            <option
-              value="home"
-              {{isSelected category "home"}}
-            >家居物業</option>
-            <option
-              value="transport"
-              {{isSelected category "transport"}}
-            >交通出行</option>
-            <option
-              value="entertainment"
-              {{isSelected category "entertainment"}}
-            >休閒娛樂</option>
-            <option
-              value="food"
-              {{isSelected category "food"}}
-            >餐飲食品</option>
-            <option value="other" {{isSelected category "other"}}>其他</option>
-          </select>
+            value="{{startDate}}"
+          />
         </div>
-      </div>
-      {{! sort  }}
-      <div class="col mx-auto">
         <div class="input-group mb-3">
-          <select class="form-select" name="sort" onchange="this.form.submit()">
-            <option
-              value="amountDesc"
-              {{isSelected sort "amountDesc"}}
-            >金額由大到小</option>
-            <option
-              value="amountAsc"
-              {{isSelected sort "amountAsc"}}
-            >金額由小到大</option>
-            <option
-              value="dateDesc"
-              {{isSelected sort "dateDesc"}}
-            >日期由近到遠</option>
-            <option
-              value="dateAsc"
-              {{isSelected sort "dateAsc"}}
-            >日期由遠到近</option>
-          </select>
+          <sapn class="input-group-text">結束日期</sapn>
+          <input
+            type="date"
+            class="form-control"
+            id="date"
+            name="endDate"
+            onchange="this.form.submit()"
+            value="{{endDate}}"
+          />
         </div>
       </div>
+    </form>
+    {{! totoalAmount }}
+    <div class="row">
+      <h1 class="col-4 fs-3">總金額: </h1>
+      <p
+        class="col-8 text-center fs-1 fw-bold totalAmountContainer"
+      >{{totalAmount}}</p>
     </div>
-    {{! date }}
-    <div class="d-grid col-8 mx-auto">
-      <div class="input-group mb-3">
-        <sapn class="input-group-text">起始日期</sapn>
-        <input
-          type="date"
-          class="form-control"
-          id="date"
-          name="startDate"
-          onchange="this.form.submit()"
-          value="{{startDate}}"
-        />
-      </div>
-      <div class="input-group mb-3">
-        <sapn class="input-group-text">結束日期</sapn>
-        <input
-          type="date"
-          class="form-control"
-          id="date"
-          name="endDate"
-          onchange="this.form.submit()"
-          value="{{endDate}}"
-        />
-      </div>
-    </div>
-  </form>
+    {{! Records area }}
+    {{#if records}}
+      <table class="table table-striped">
+        <tbody>
+          {{#each records}}
+            <tr class="align-middle">
+              <td class="col-1 text-center"><i
+                  class="{{this.categoryId.icon}}"
+                ></i></td>
+              <td>
+                {{this.name}}
+                <br />
+                {{this.date}}
+              </td>
+              <td>{{this.amount}}</td>
+              <td class="text-end">
+                <a
+                  href="/records/edit/{{this._id}}"
+                  class="btn btn-dark"
+                >修改</a>
+                <button
+                  type="submit"
+                  class="btn btn-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modal-{{this._id}}"
+                >刪除</button>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <h1 class="text-center">No records...</h1>
+    {{/if}}
+  </div>
 </div>
 
-<div class="row">
-  <h1 class="col-4 fs-3">總金額: </h1>
-  <p
-    class="col-8 text-center fs-1 fw-bold totalAmountContainer"
-  >{{totalAmount}}</p>
-</div>
-{{! Records area }}
-{{#if records}}
-  <table class="table table-striped">
-    <tbody>
-      {{#each records}}
-        <tr class="align-middle">
-          <td class="col-1 text-center"><i
-              class="{{this.categoryId.icon}}"
-            ></i></td>
-          <td>
-            {{this.name}}
-            <br />
-            {{this.date}}
-          </td>
-          <td>{{this.amount}}</td>
-          <td class="text-end">
-            <a href="/records/edit/{{this._id}}" class="btn btn-dark">修改</a>
-            <button
-              type="submit"
-              class="btn btn-danger"
-              data-bs-toggle="modal"
-              data-bs-target="#modal-{{this._id}}"
-            >刪除</button>
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-{{else}}
-  <h1 class="text-center">No records...</h1>
-{{/if}}
 {{! create new record }}
 <div class="row">
   <div class="col mx-auto text-center">
