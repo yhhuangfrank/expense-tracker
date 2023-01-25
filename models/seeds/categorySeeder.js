@@ -1,4 +1,4 @@
-//! require mongoose and relared modules
+//! require mongoose and related modules
 const mongoose = require("mongoose");
 const categoryList = require("../seeds/categoryList.json");
 const Category = require("../categories");
@@ -14,8 +14,11 @@ mongoose.connect(process.env.MONGODB_URI);
 const db = mongoose.connection;
 
 db.once("open", async () => {
-  console.log("MongoDB connected!");
-  await Category.create(categoryList);
-  console.log("CategorySeeder done!");
-  process.exit();
+  try {
+    await Category.create(categoryList);
+    console.log("CategorySeeder done!");
+    process.exit();
+  } catch (err) {
+    console.log(err);
+  }
 });

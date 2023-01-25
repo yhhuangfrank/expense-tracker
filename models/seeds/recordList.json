@@ -1,0 +1,122 @@
+[
+  {
+    "name": "user1學期一學費",
+    "date": "2023-01-01",
+    "amount": "10000",
+    "category": "home"
+  },
+  {
+    "name": "user1學期二學費",
+    "date": "2023-01-02",
+    "amount": "10000",
+    "category": "home"
+  },
+  {
+    "name": "汽車油錢1",
+    "date": "2023-01-03",
+    "amount": "100",
+    "category": "transport"
+  },
+  {
+    "name": "汽車油錢2",
+    "date": "2023-01-04",
+    "amount": "120",
+    "category": "transport"
+  },
+  {
+    "name": "漫畫",
+    "date": "2023-01-05",
+    "amount": "200",
+    "category": "entertainment"
+  },
+  {
+    "name": "小說",
+    "date": "2023-01-05",
+    "amount": "500",
+    "category": "entertainment"
+  },
+  {
+    "name": "早餐",
+    "date": "2023-01-06",
+    "amount": "200",
+    "category": "food"
+  },
+  {
+    "name": "晚餐",
+    "date": "2023-01-06",
+    "amount": "500",
+    "category": "food"
+  },
+  {
+    "name": "文具",
+    "date": "2023-01-07",
+    "amount": "150",
+    "category": "other"
+  },
+  {
+    "name": "課本",
+    "date": "2023-01-07",
+    "amount": "1000",
+    "category": "other"
+  },
+  {
+    "name": "user2學期一學費",
+    "date": "2023-01-01",
+    "amount": "10000",
+    "category": "home"
+  },
+  {
+    "name": "user2學期二學費",
+    "date": "2023-01-02",
+    "amount": "10000",
+    "category": "home"
+  },
+  {
+    "name": "機車油錢1",
+    "date": "2023-01-03",
+    "amount": "100",
+    "category": "transport"
+  },
+  {
+    "name": "機車油錢2",
+    "date": "2023-01-04",
+    "amount": "120",
+    "category": "transport"
+  },
+  {
+    "name": "PS5",
+    "date": "2023-01-05",
+    "amount": "20000",
+    "category": "entertainment"
+  },
+  {
+    "name": "Switch",
+    "date": "2023-01-05",
+    "amount": "15000",
+    "category": "entertainment"
+  },
+  {
+    "name": "午餐",
+    "date": "2023-01-06",
+    "amount": "200",
+    "category": "food"
+  },
+  {
+    "name": "消夜",
+    "date": "2023-01-06",
+    "amount": "500",
+    "category": "food"
+  },
+  {
+    "name": "文具",
+    "date": "2023-01-06",
+    "amount": "150",
+    "category": "other"
+  },
+  {
+    "name": "課本",
+    "date": "2023-01-06",
+    "amount": "1000",
+    "category": "other"
+  }
+]
