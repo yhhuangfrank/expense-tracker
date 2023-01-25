@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
       : dayjs().format("YYYY-MM-DD"); //- 若無選擇則預設結束時間為今日
     const findOption = dateRange(startDate, endDate);
     const currentPage = req.query.page ? Number(req.query.page) : 1;
-    const NUM_PER_PAGE = 1;
+    const NUM_PER_PAGE = 4;
     const skipOffset = (currentPage - 1) * NUM_PER_PAGE; //- 每頁需skip的docs數
     let categoryOption = {};
     switch (category) {

@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
   try {
     const userId = req.user._id;
     const currentPage = 1; //- 首頁預設顯示在第一頁
-    const NUM_PER_PAGE = 1;
+    const NUM_PER_PAGE = 4;
     const [records, recordsAmount, sum] = await Promise.all([
       Record.find({ userId })
         .populate("categoryId")
