@@ -2,8 +2,8 @@
 
 A web application for managing your expense
 
-![Previrew](https://github.com/yhhuangfrank/expense-tracker/blob/main/public/images/preview%20image1.png)
-![Previrew](https://github.com/yhhuangfrank/expense-tracker/blob/main/public/images/preview%20image2.png)
+![Previrew](https://github.com/yhhuangfrank/expense-tracker/blob/main/public/images/preview-20image1.png)
+![Previrew](https://github.com/yhhuangfrank/expense-tracker/blob/main/public/images/preview-20image2.png)
 
 ## Features
 
