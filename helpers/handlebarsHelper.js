@@ -19,8 +19,9 @@ function paginator(
     untilPage = totalPages;
   }
   let pagination = "";
-  //- 當總頁數為7頁以上，過濾多餘頁數及新增第一頁、最後頁連結
-  if (totalPages >= 7) {
+  const CRITICAL_PAGES = 7;
+  //- 當總頁數為7頁以上，過濾多餘頁數及新增第一頁連結
+  if (totalPages >= CRITICAL_PAGES) {
     //- 目前頁面超過第二頁，顯示第一頁連結
     if (currentPage > 2) {
       pagination += `
@@ -50,8 +51,8 @@ function paginator(
     }
   }
 
-  //- 當總頁數為7頁以上，過濾多餘頁數及新增第一頁、最後頁連結
-  if (totalPages >= 7) {
+  //- 當總頁數為7頁以上，過濾多餘頁數及新增最後頁連結
+  if (totalPages >= CRITICAL_PAGES) {
     //- 過濾中間頁
     if (untilPage < totalPages - 1) {
       pagination += `
