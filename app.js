@@ -8,7 +8,7 @@ const usePassport = require("./config/passport");
 const routes = require("./routes/index");
 const { isSelected, paginator } = require("./helpers/handlebarsHelper");
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 //- connect to db
 require("./config/mongoose");
@@ -55,6 +55,6 @@ app.use((req, res, next) => {
 app.use(routes);
 
 //- listen to server
-app.listen(port, () => {
-  console.log(`App is listening to http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`App is listening to http://localhost:${PORT}`);
 });
