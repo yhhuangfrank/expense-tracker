@@ -2,13 +2,33 @@
   <div class="col-8 mx-auto">
     <div class="row">
       <div class="col-4">
-        <h5>*必填欄位</h5>
+        <h5 style="color:red; font-weight:bold">*必填欄位</h5>
       </div>
       <div class="col-7">
         <h1>請修改你的支出</h1>
       </div>
     </div>
-    <form action="/records/edit/{{record._id}}?_method=PUT" method="POST" class="mt-2">
+    {{#if errMessage}}
+      {{#each errMessage}}
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>{{this.message}}</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      {{/each}}
+    {{/if}}
+    <form
+      action="/records/edit/{{record._id}}?_method=PUT"
+      method="POST"
+      class="mt-2"
+    >
       <div class="input-group mb-4">
         <sapn class="input-group-text">名稱*</sapn>
         <input

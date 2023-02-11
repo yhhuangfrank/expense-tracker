@@ -3,6 +3,7 @@ const Record = require("../../models/records");
 const Category = require("../../models/categories");
 const dayjs = require("dayjs");
 const dateHelper = require("../../helpers/dateHelper");
+const { checkForm } = require("../../helpers/formHelper");
 const { getCategoryIcon } = require("../../helpers/searchHelper");
 
 //- 顯示所有records
@@ -66,6 +67,10 @@ router.get("/new", (req, res) => {
 router.post("/new", async (req, res) => {
   try {
     const { name, date, amount, category } = req.body;
+    const errMessage = checkForm(req.body);
+    if (errMessage.length) {
+      return res.render("new", { name, date, amount, category, errMessage });
+    }
     const userId = req.user._id;
     //- 查詢和建立category
     let foundCategory = await Category.findOne({ name: category });
@@ -107,6 +112,12 @@ router.put("/edit/:_id", async (req, res) => {
   try {
     const { _id } = req.params;
     const { name, date, amount, category } = req.body;
+    const errMessage = checkForm(req.body);
+    if (errMessage.length) {
+      const record = Object.assign({}, req.body);
+      record._id = _id;
+      return res.render("edit", { record, category, errMessage });
+    }
     let foundCategory = await Category.findOne({ name: category });
     if (!foundCategory) {
       const icon = getCategoryIcon(category);
