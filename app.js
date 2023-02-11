@@ -6,7 +6,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const usePassport = require("./config/passport");
 const routes = require("./routes/index");
-const { isSelected, paginator } = require("./helpers/handlebarsHelper");
+const handlebarsHelper = require("./helpers/handlebarsHelper");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -17,10 +17,7 @@ require("./config/mongoose");
 const hbs = exphbs.create({
   extname: "hbs",
   defaultLayout: "main",
-  helpers: {
-    isSelected: isSelected,
-    paginator: paginator,
-  },
+  helpers: handlebarsHelper,
 });
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
