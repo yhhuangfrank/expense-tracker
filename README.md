@@ -7,8 +7,11 @@ A web application for managing your expense
 
 ## Features
 
-- 會員登入、註冊功能
+- 本地會員登入、註冊功能
+- 第三方(Facebook、Google)會員登入功能
+- 本地會員重設密碼功能
 - 查看使用者帳號內所有支出紀錄
+- 針對支出筆數進行分頁，方便閱讀
 - 新增一筆支出
 - 編輯支出
 - 刪除支出
