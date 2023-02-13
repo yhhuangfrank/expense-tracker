@@ -69,7 +69,8 @@ router.post("/new", async (req, res) => {
     const { name, date, amount, category } = req.body;
     const errMessage = checkForm(req.body);
     if (errMessage.length) {
-      return res.render("new", { name, date, amount, category, errMessage });
+      const record = Object.assign({}, req.body);
+      return res.render("new", { record, category, errMessage });
     }
     const userId = req.user._id;
     //- 查詢和建立category
