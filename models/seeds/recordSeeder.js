@@ -28,9 +28,8 @@ db.once("open", async () => {
         const hash = bcrypt.hashSync(password, 10);
         const createdUser = await User.create({ name, email, password: hash });
         //- 分配並建立record
-        const slicedRecordList = userIndex
-          ? recordList.slice(10)
-          : recordList.slice(0, 10);
+        const startIndex = 10 * userIndex;
+        const slicedRecordList = recordList.slice(startIndex, startIndex + 10);
         await Promise.all(
           slicedRecordList.map(async (record) => {
             const { name, date, amount, category } = record;
