@@ -24,7 +24,7 @@
         </div>
       {{/each}}
     {{/if}}
-    <form action="/records/new" method="POST" class="mt-2">
+    <form action="/records/new" method="POST" class="mt-2" novalidate>
       <div class="input-group mb-4">
         <sapn class="input-group-text">名稱*</sapn>
         <input
@@ -74,7 +74,7 @@
           id="amount"
           name="amount"
           min="0"
-          placeholder="輸入金額"
+          placeholder="輸入金額(上限為1.79E308)"
           value="{{record.amount}}"
           required
         />

@@ -28,6 +28,7 @@
       action="/records/edit/{{record._id}}?_method=PUT"
       method="POST"
       class="mt-2"
+      novalidate
     >
       <div class="input-group mb-4">
         <sapn class="input-group-text">名稱*</sapn>
@@ -76,7 +77,7 @@
           id="amount"
           name="amount"
           min="0"
-          placeholder="輸入金額"
+          placeholder="輸入金額(上限為1.79E308)"
           value="{{record.amount}}"
         />
       </div>
